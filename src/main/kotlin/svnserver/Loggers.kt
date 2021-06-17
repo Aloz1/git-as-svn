@@ -20,6 +20,7 @@ object Loggers {
     val ldap: Logger = LoggerFactory.getLogger("ldap")
     val lfs: Logger = LoggerFactory.getLogger("lfs")
     val misc: Logger = LoggerFactory.getLogger("misc")
+    val ssh: Logger = LoggerFactory.getLogger("ssh")
     val svn: Logger = LoggerFactory.getLogger("svn")
     val web: Logger = LoggerFactory.getLogger("web")
 }

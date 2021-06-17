@@ -97,7 +97,7 @@ internal class SSHDirectoryWatcher(config: KeysConfig, private val mapper: KeysM
             StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_DELETE
         )
         private const val AUTHORIZED_KEYS = "authorized_keys"
-        private val log = Loggers.misc
+        private val log = Loggers.ssh
     }
 
     init {

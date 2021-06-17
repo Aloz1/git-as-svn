@@ -14,10 +14,12 @@ import svnserver.auth.UserDB
 import svnserver.server.SessionContext
 import java.nio.charset.StandardCharsets
 import java.util.*
+import javax.crypto.SecretKey
+import javax.crypto.spec.SecretKeySpec
 
 class KeyAuthenticator internal constructor(
     private val userDB: UserDB,
-    private val secretToken: String
+    private val secretToken: SecretKey?
 ) : Authenticator {
     override val methodName: String
         get() = "KEY-AUTHENTICATOR"
@@ -27,10 +29,9 @@ class KeyAuthenticator internal constructor(
         val decodedToken = String(Base64.getDecoder().decode(token.trim { it <= ' ' }), StandardCharsets.US_ASCII)
         val credentials = decodedToken.split("\u0000").toTypedArray()
         if (credentials.size < 3) return null
-        val clientSecretToken = credentials[1]
-        if (clientSecretToken.trim { it <= ' ' } == secretToken) {
-            val username = credentials[2]
-            return userDB.lookupByExternal(username)
+        val clientSecretToken = SecretKeySpec(credentials[1].toByteArray(), "RAW")
+        secretToken?.equals(clientSecretToken)?.let {
+            return userDB.lookupByExternal(credentials[2])
         }
         return null
     }

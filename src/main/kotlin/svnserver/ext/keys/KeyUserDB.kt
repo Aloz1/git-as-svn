@@ -12,9 +12,11 @@ import svnserver.auth.Authenticator
 import svnserver.auth.User
 import svnserver.auth.UserDB
 import java.util.*
+import javax.crypto.SecretKey
 
-class KeyUserDB(private val internal: UserDB, secretToken: String) : UserDB {
-    private val keyAuthenticator: KeyAuthenticator = KeyAuthenticator(internal, secretToken)
+class KeyUserDB(private val internal: UserDB, secretKey: SecretKey?) : UserDB {
+    private val keyAuthenticator: KeyAuthenticator = KeyAuthenticator(internal, secretKey)
+
     override fun authenticators(): Collection<Authenticator> {
         val authenticators = ArrayList(internal.authenticators())
         authenticators.add(keyAuthenticator)

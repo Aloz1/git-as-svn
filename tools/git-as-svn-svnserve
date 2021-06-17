@@ -38,8 +38,16 @@ fi
 #
 # You would need to set the REAL_SHELL_PATH to point to this file
 # and restore the shadowing on updates to the application
+#
+# For secret, this should be a totally random secret.
+# Example:
+#   `openssl rand -base64 32`
+# or
+#   `head -c 32 /dev/urandom | base64`
 ############################################################
+#SECRET="$(cat CHOOSE_PATH_TO_FILE_WITH_SECRET)"
 SECRET="CHANGE_THIS_TO_SOMETHING_SECRET"
+
 
 SSH_ORIGINAL_COMMANDS=($SSH_ORIGINAL_COMMAND)
 
